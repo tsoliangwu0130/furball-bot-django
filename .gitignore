@@ -1,0 +1,5 @@
+# sqlite3 files
+*.sqlite3
+
+# pyc files
+*.pyc
