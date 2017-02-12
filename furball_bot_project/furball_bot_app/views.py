@@ -1,11 +1,15 @@
-from django.shortcuts import render
+import json
+import requests
+import random
+import re
+from pprint import pprint
+
 from django.views import generic
 from django.http.response import HttpResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 
 
-# Create your views here.
 class FurballBotView(generic.View):
 	# The get method is the same as before.. omitted here for brevity
 	@method_decorator(csrf_exempt)
