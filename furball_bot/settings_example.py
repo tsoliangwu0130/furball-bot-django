@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 
 import os
 
+# Facebook Graph API URL
+FB_GRAPH_API_URL = 'https://graph.facebook.com/v2.8'
+
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -23,6 +27,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY        = ''
 VERIFY_TOKEN      = ''
 PAGE_ACCESS_TOKEN = ''
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
