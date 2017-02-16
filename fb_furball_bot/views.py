@@ -13,8 +13,23 @@ from django.utils.decorators import method_decorator
 VERIFY_TOKEN = "furball_bot_token"
 PAGE_ACCESS_TOKEN = "EAAFe4BILMB0BAG9IHy5FZBpdywkLzrqK1UmPXTFQSYMdgYkuZABC0hEulEvsswxqHFhpcrDC4cJWqwEeS3O5noQ3ps4alyFiVwHfeKsH4eNF9nM670YU03zvuOCZAZAUY8U04nB28eQ5YpaXn1LAKY7UXOeS5mAIAYRjXAgZBLwZDZD"
 
+jokes = {'stupid': ["""Yo' Mama is so stupid, she needs a recipe to make ice cubes.""",
+					"""Yo' Mama is so stupid, she thinks DNA is the National Dyslexics Association."""],
+		 'fat': ["""Yo' Mama is so fat, when she goes to a restaurant, instead of a menu, she gets an estimate.""",
+				 """ Yo'Mama is so fat, when the cops see her on a street corner, they yell,"Hey you guys, break it up!" """],
+		 'dumb': ["""Yo' Mama is so dumb, when God was giving out brains, she thought they were milkshakes and asked for extra thick.""",
+				  """Yo' Mama is so dumb, she locked her keys inside her motorcycle."""]}
+
 
 def post_facebook_message(fbid, recevied_message):
+	tokens = re.sub(r"[^a-zA-Z0-9\s]", ' ', recevied_message).lower().split()
+	joke_text = ''
+	for token in tokens:
+		if token in jokes:
+			joke_text = random.choice(jokes[token])
+			break
+	if not joke_text:
+		joke_text = "I didn't understand! Send 'stupid', 'fat', 'dumb' for a Yo Mama joke!"
 	post_message_url = 'https://graph.facebook.com/v2.8/me/messages?access_token=%s' % PAGE_ACCESS_TOKEN
 	response_msg = json.dumps({"recipient": {"id": fbid}, "message": {"text": recevied_message}})
 	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg)
