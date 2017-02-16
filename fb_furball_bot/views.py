@@ -32,6 +32,7 @@ def post_facebook_message(fbid, recevied_message):
 		joke_text = "I didn't understand! Send 'stupid', 'fat', 'dumb' for a Yo Mama joke!"
 
 	user_details_url = "https://graph.facebook.com/v2.8/%s" % fbid
+	pprint(user_details_url)
 	user_details_params = {'fields': 'first_name,last_name,profile_pic', 'access_token': PAGE_ACCESS_TOKEN}
 	user_details = requests.get(user_details_url, user_details_params).json()
 	joke_text = 'Yo ' + user_details['first_name'] + '..! ' + joke_text
