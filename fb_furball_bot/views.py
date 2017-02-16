@@ -31,7 +31,7 @@ def post_facebook_message(fbid, recevied_message):
 	if not joke_text:
 		joke_text = "I didn't understand! Send 'stupid', 'fat', 'dumb' for a Yo Mama joke!"
 	post_message_url = 'https://graph.facebook.com/v2.8/me/messages?access_token=%s' % PAGE_ACCESS_TOKEN
-	response_msg = json.dumps({"recipient": {"id": fbid}, "message": {"text": recevied_message}})
+	response_msg = json.dumps({"recipient": {"id": fbid}, "message": {"text": joke_text}})
 	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg)
 	pprint(status.json())
 
