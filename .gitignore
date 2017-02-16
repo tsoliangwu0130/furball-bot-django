@@ -4,5 +4,5 @@
 # pyc files
 *.pyc
 
-# configuration file
-configuration.json
+# settings file
+settings.py
