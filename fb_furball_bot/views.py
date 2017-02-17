@@ -1,6 +1,4 @@
 import json
-import random
-import re
 import requests
 from pprint import pprint
 
