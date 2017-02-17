@@ -16,7 +16,7 @@ def post_facebook_message(fbid, recevied_message):
 	user_details = requests.get(user_details_url, user_details_params).json()
 
 	try:
-		response_text = 'Hello ' + user_details['first_name'] + '!\n' + 'This is what you said:' + recevied_message + '\n' + 'Current time: ' + timezone.now()
+		response_text = 'Hello ' + user_details['first_name'] + '!\n' + 'This is what you said:' + recevied_message + '\n' + 'Current time: ' + str(timezone.now())
 	except KeyError:
 		response_text = 'Caught KeyError...'
 
