@@ -27,7 +27,7 @@ def post_facebook_message(fbid, recevied_message):
 
 class FurballBotView(generic.View):
 	def get(self, request, *args, **kwargs):
-		if self.request.GET['hub.verify_token'] == settings.VERIFY_TOKEN:
+		if self.request.GET.get('hub.verify_token') == settings.VERIFY_TOKEN:
 			return HttpResponse(self.request.GET['hub.challenge'])
 		else:
 			return HttpResponse('Error, invalid token')
