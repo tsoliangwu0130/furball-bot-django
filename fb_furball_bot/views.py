@@ -1,10 +1,11 @@
 import json
 import requests
 from pprint import pprint
+from pytz import timezone
 
 from django.conf import settings
 from django.http.response import HttpResponse
-from django.utils import timezone
+from django.utils.timezone import activate
 from django.utils.decorators import method_decorator
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
@@ -15,8 +16,10 @@ def post_facebook_message(fbid, recevied_message):
 	user_details_params = {'fields': 'first_name,last_name,profile_pic', 'access_token': settings.PAGE_ACCESS_TOKEN}
 	user_details = requests.get(user_details_url, user_details_params).json()
 
+	activate(settings.TIME_ZONE)
+
 	try:
-		response_text = 'Hello ' + user_details['first_name'] + '!\n' + 'This is what you said:' + recevied_message + '\n' + 'Current time: ' + str(timezone.localtime(timezone.now()))
+		response_text = 'Hello ' + user_details['first_name'] + '!\n' + 'This is what you said:' + recevied_message + '\n' + 'Current time: ' + str(timezone(settings.TIME_ZONE))
 	except KeyError:
 		response_text = 'Caught KeyError...'
 
