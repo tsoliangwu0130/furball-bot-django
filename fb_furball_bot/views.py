@@ -20,7 +20,7 @@ def post_facebook_message(fbid, recevied_message):
 	activate(settings.TIME_ZONE)
 
 	try:
-		response_text = 'Hello ' + user_details['first_name'] + '!\n' + 'This is what you said:' + recevied_message + '\n' + 'Current timezone: ' + str(timezone(settings.TIME_ZONE) + '\n' + 'Current time: ' + str(datetime.datetime.now()))
+		response_text = 'Hello ' + user_details['first_name'] + '!\n' + 'This is what you said: ' + recevied_message + '\n' + 'Current timezone: ' + str(timezone(settings.TIME_ZONE) + '\n' + 'Current time: ' + str(datetime.datetime.now()))
 	except KeyError:
 		response_text = 'Caught KeyError...'
 
