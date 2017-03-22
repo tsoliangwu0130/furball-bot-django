@@ -1,4 +1,6 @@
 import json
+import random
+import re
 import requests
 from pprint import pprint
 from pytz import timezone
@@ -9,19 +11,21 @@ from django.utils.decorators import method_decorator
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 
+FUNC_KEYWORD = '@furball'
+
 
 def furball_behavior(recevied_message):
+	clean_message = re.findall(r'^@furball(.*)', recevied_message)[0]
+	recevied_message = random.choice(clean_message.split("or")).strip()
 	return recevied_message
 
 
 def post_facebook_message(fbid, recevied_message):
-	func_keyword = '@furball'
-
 	user_details_url = settings.FB_GRAPH_API_URL + "/%s" % fbid
 	user_details_params = {'fields': 'first_name,last_name,profile_pic', 'access_token': settings.PAGE_ACCESS_TOKEN}
 	user_details = requests.get(user_details_url, user_details_params).json()
 
-	if recevied_message.startswith(func_keyword):
+	if recevied_message.startswith(FUNC_KEYWORD):
 		response_text = furball_behavior(recevied_message)
 	else:
 		response_text = 'Meow!'
