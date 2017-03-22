@@ -24,7 +24,7 @@ def post_facebook_message(fbid, recevied_message):
 	if recevied_message.startswith(func_keyword):
 		response_text = furball_behavior(recevied_message)
 	else:
-		response_text = 'Hello %s, meow!' % user_details['first_name']
+		response_text = 'Meow!'
 
 	post_message_url = settings.FB_GRAPH_API_URL + '/me/messages?access_token=%s' % settings.PAGE_ACCESS_TOKEN
 	response_msg = json.dumps({'recipient': {'id': fbid}, 'message': {'text': response_text}})
