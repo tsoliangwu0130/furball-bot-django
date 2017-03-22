@@ -1,4 +1,3 @@
-import datetime
 import json
 import requests
 from pprint import pprint
@@ -6,7 +5,6 @@ from pytz import timezone
 
 from django.conf import settings
 from django.http.response import HttpResponse
-from django.utils.timezone import activate
 from django.utils.decorators import method_decorator
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
@@ -17,16 +15,9 @@ def post_facebook_message(fbid, recevied_message):
 	user_details_params = {'fields': 'first_name,last_name,profile_pic', 'access_token': settings.PAGE_ACCESS_TOKEN}
 	user_details = requests.get(user_details_url, user_details_params).json()
 
-	activate(settings.TIME_ZONE)
-
-	try:
-		response_text = 'Hello ' + user_details['first_name'] + '!\n' + 'This is what you said: ' + recevied_message + '\n' + 'Current time: ' + str(datetime.datetime.now()) + '\n'
-	except KeyError:
-		response_text = 'Caught KeyError...'
-
 	post_message_url = settings.FB_GRAPH_API_URL + '/me/messages?access_token=%s' % settings.PAGE_ACCESS_TOKEN
-	response_msg = json.dumps({"recipient": {"id": fbid}, "message": {"text": response_text}})
-	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg)
+	response_msg = json.dumps({'recipient': {'id': fbid}, 'message': {'text': response_text}})
+	status = requests.post(post_message_url, headers={'Content-Type': 'application/json'}, data=response_msg)
 	pprint(status.json())
 
 
