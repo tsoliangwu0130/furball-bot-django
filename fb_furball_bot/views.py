@@ -15,7 +15,7 @@ def furball_behavior(recevied_message):
 
 
 def post_facebook_message(fbid, recevied_message):
-	func_keyword = '/furball'
+	func_keyword = '@furball'
 
 	user_details_url = settings.FB_GRAPH_API_URL + "/%s" % fbid
 	user_details_params = {'fields': 'first_name,last_name,profile_pic', 'access_token': settings.PAGE_ACCESS_TOKEN}
