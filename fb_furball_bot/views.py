@@ -1,6 +1,5 @@
 import json
 import requests
-import furball_behavior
 from pprint import pprint
 from pytz import timezone
 
@@ -11,6 +10,10 @@ from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 
 
+def furball_behavior(recevied_message):
+	return recevied_message
+
+
 def post_facebook_message(fbid, recevied_message):
 	func_keyword = '/furball'
 
@@ -19,7 +22,7 @@ def post_facebook_message(fbid, recevied_message):
 	user_details = requests.get(user_details_url, user_details_params).json()
 
 	if recevied_message.startswith(func_keyword):
-		response_text = furball_behavior.behavior(recevied_message)
+		response_text = furball_behavior(recevied_message)
 	else:
 		response_text = 'Hello %s, meow!' % user_details['first_name']
 
