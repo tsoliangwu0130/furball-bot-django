@@ -15,6 +15,7 @@ FUNC_KEYWORD = '@furball'
 
 
 def furball_behavior(recevied_message):
+	# or function: choose one from a list of options
 	clean_message = re.findall(r'^@furball(.*)', recevied_message)[0]
 	recevied_message = random.choice(clean_message.split("or")).strip()
 	return recevied_message
