@@ -16,9 +16,7 @@ FUNC_KEYWORD = '@furball'
 
 def furball_behavior(recevied_message):
 	# or function: choose one from a list of options
-	clean_message = re.findall(r'^@furball(.*)', recevied_message)[0]
-	recevied_message = random.choice(clean_message.split("or")).strip()
-	return recevied_message
+	return random.choice(recevied_message.split("or")).strip()
 
 
 def post_facebook_message(fbid, recevied_message):
@@ -27,7 +25,8 @@ def post_facebook_message(fbid, recevied_message):
 	user_details = requests.get(user_details_url, user_details_params).json()
 
 	if recevied_message.startswith(FUNC_KEYWORD):
-		response_text = furball_behavior(recevied_message)
+		clean_message = re.findall(r'^@furball(.*)', recevied_message)[0]
+		response_text = furball_behavior(clean_message)
 	else:
 		response_text = 'Meow!'
 
