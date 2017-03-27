@@ -3,7 +3,6 @@ import random
 import re
 import requests
 from pprint import pprint
-from pytz import timezone
 
 from django.conf import settings
 from django.http.response import HttpResponse
@@ -20,9 +19,9 @@ def furball_behavior(recevied_message):
 
 
 def post_facebook_message(fbid, recevied_message):
-	user_details_url = settings.FB_GRAPH_API_URL + "/%s" % fbid
+	user_details_url    = settings.FB_GRAPH_API_URL + "/%s" % fbid
 	user_details_params = {'fields': 'first_name,last_name,profile_pic', 'access_token': settings.PAGE_ACCESS_TOKEN}
-	user_details = requests.get(user_details_url, user_details_params).json()
+	user_details        = requests.get(user_details_url, user_details_params).json()
 
 	if recevied_message.startswith(FUNC_KEYWORD):
 		clean_message = re.findall(r'^@furball(.*)', recevied_message)[0]
@@ -31,8 +30,8 @@ def post_facebook_message(fbid, recevied_message):
 		response_text = 'Meow!'
 
 	post_message_url = settings.FB_GRAPH_API_URL + '/me/messages?access_token=%s' % settings.PAGE_ACCESS_TOKEN
-	response_msg = json.dumps({'recipient': {'id': fbid}, 'message': {'text': response_text}})
-	status = requests.post(post_message_url, headers={'Content-Type': 'application/json'}, data=response_msg)
+	response_msg     = json.dumps({'recipient': {'id': fbid}, 'message': {'text': response_text}})
+	status           = requests.post(post_message_url, headers={'Content-Type': 'application/json'}, data=response_msg)
 	pprint(status.json())
 
 
