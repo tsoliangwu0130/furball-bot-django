@@ -10,6 +10,7 @@ from django.utils.decorators import method_decorator
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 
+DEBUG        = False
 FUNC_KEYWORD = '@furball'
 
 
@@ -19,6 +20,7 @@ def furball_behavior(recevied_message):
 
 
 def post_facebook_message(fbid, recevied_message):
+	# users details
 	user_details_url    = settings.FB_GRAPH_API_URL + "/%s" % fbid
 	user_details_params = {'fields': 'first_name,last_name,profile_pic', 'access_token': settings.PAGE_ACCESS_TOKEN}
 	user_details        = requests.get(user_details_url, user_details_params).json()
@@ -32,7 +34,9 @@ def post_facebook_message(fbid, recevied_message):
 	post_message_url = settings.FB_GRAPH_API_URL + '/me/messages?access_token=%s' % settings.PAGE_ACCESS_TOKEN
 	response_msg     = json.dumps({'recipient': {'id': fbid}, 'message': {'text': response_text}})
 	status           = requests.post(post_message_url, headers={'Content-Type': 'application/json'}, data=response_msg)
-	pprint(status.json())
+
+	if DEBUG:
+		pprint(status.json())
 
 
 class FurballBotView(generic.View):
@@ -51,6 +55,7 @@ class FurballBotView(generic.View):
 		for entry in incoming_message['entry']:
 			for message in entry['messaging']:
 				if 'message' in message:
-					pprint(message)
+					if DEBUG:
+						pprint(message)
 					post_facebook_message(message['sender']['id'], message['message']['text'])
 		return HttpResponse()
